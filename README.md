@@ -39,6 +39,75 @@ export PATH=$PATH:/opt/allinea/forge/bin/
 
 Example:
 
+Serial Laplace:
+
+In case that you plan to use PGI compiler:
+```
+pgcc -O2 -Minfo=all -o laplace_serial laplace_serial.c
+```
+* -Minfo=all: Informs you about all the messages 
+
+Output:
+```
+main:
+     29, Loop not vectorized/parallelized: contains call
+     32, Generated an alternate version of the loop
+         Generated vector simd code for the loop
+         Generated 3 prefetch instructions for the loop
+         Generated vector simd code for the loop
+         Generated 3 prefetch instructions for the loop
+     41, Generated vector simd code for the loop containing reductions
+         Generated 2 prefetch instructions for the loop
+initialize:
+     68, Memory zero idiom, loop replaced by call to __c_mzero8
+     73, Generated vector simd code for the loop
+         Residual loop unrolled 2 times (completely unrolled)
+     78, Generated vector simd code for the loop
+         Residual loop unrolled 2 times (completely unrolled)
+track_progress:
+     90, Loop not vectorized/parallelized: contains call
+```
+
+5. Execution
+
+Submission script:
+```
+#!/bin/bash 
+#SBATCH --partition=batch 
+#SBATCH --job-name="test" 
+#SBATCH --gres=gpu:p100:1
+#SBATCH --res=HACKATHON_TEAMX
+#SBATCH --nodes=1 
+#SBATCH --ntasks=1
+#SBATCH --time=00:10:00 
+#SBATCH --exclusive 
+#SBATCH --err=JOB.%j.err 
+#SBATCH --output=JOB.%j.out 
+#--------------------------------------------# 
+module load cuda/9.0.176
+module load pgi/17.10
+srun -n 1 --hint=nomultithread ./laplace_serial
+```
+
+Modify the X according to your team number (1-6)
+In the above exampe we want to use one Nvidia P100 card, if you plan to use 2 cards then declare:
+
+```
+#SBATCH --gres=gpu:p100:2
+```
+
+You can modify the time limit and the number of the tasks, if required.
+
+Source: [submission_laplace_serial](submit_laplace_serial.sh)
+
+6. Profiling
+
+Compile your code for CPU (remove -acc and -ta)
+
+Execute:
+nvprof --cpu-profiling on ./executable
+
+
 In case that you plan to use PGI compiler:
 ```
 pgcc -O2 -ta=tesla:cuda8.0 -acc -Minfo=accel -o test test1.c
@@ -84,37 +153,6 @@ Loop unrolled 6 times (completely unrolled)
 * Minfo=intensity
 Provides the intensity of all the loops, intensity is the (Compute operations/Memory Operations), if it is more or equal to 1.0 then we should move this loop to GPUs, otherwise not.
 
-5. Execution
-
-Submission script:
-```
-#!/bin/bash 
-#SBATCH --partition=batch 
-#SBATCH --job-name="test" 
-#SBATCH --gres=gpu:p100:1
-#SBATCH --res=HACKATHON_TEAMX
-#SBATCH --nodes=1 
-#SBATCH --ntasks=1
-#SBATCH --time=00:10:00 
-#SBATCH --exclusive 
-#SBATCH --err=JOB.%j.err 
-#SBATCH --output=JOB.%j.out 
-#--------------------------------------------# 
-module load cuda/9.0.176
-module load pgi/17.10
-srun -n 1 --hint=nomultithread ./test
-```
-
-Modify the X according to your team number (1-6)
-In the above exampe we want to use one Nvidia P100 card, if you plan to use 2 cards then declare:
-
-```
-#SBATCH --gres=gpu:p100:2
-```
-
-You can modify the time limit and the number of the tasks, if required.
-
-Source: [submission_file](submit.sh)
 
 6. Profiling
 You compile your code for CPU
