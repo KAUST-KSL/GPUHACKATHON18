@@ -10,7 +10,7 @@ The introduction talk from Dr Saber Feki can be downloaded here
 ssh username@glogin.ibex.kaust.edu.sa
 ```
 
-Go to the following location:
+2. Go to the following location:
 
 ```
 cd /scratch/dragon/amd/$USER 
@@ -20,7 +20,7 @@ cd gpuhackathon18
 
 From now on we consider that you are always inside the folder /scratch/dragon/amd/$USER/gpuhackathon18
 
-Before you start working on IBEX, load the following modules:
+3. Before you start working on IBEX, load the following modules:
 
 ```
 module load cuda/9.0.176
@@ -35,7 +35,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/sw/cs/pgi/linux86-64/16.1/lib/
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/sw/cs/pgi/linux86-64/16.1/mpi/openmpi-1.10.1/lib/
 export PATH=$PATH:/opt/allinea/forge/bin/
 
-Compilation
+4. Compilation
 
 Example:
 
@@ -69,9 +69,9 @@ main:
          44, Generating implicit reduction(max:worst_dt)
 ```
 
-use compiler pgf90 for Fotran and pgc++ for C++
+Use compiler pgf90 for Fotran and pgc++ for C++
 
-Options: -ta=tesla:lineinfo -Minfo=all,intensity
+Options: -ta=tesla:cuda8.0:lineinfo -Minfo=all,intensity
 
 lineinfo
 It will provide the lines in the code that you have memory problems
