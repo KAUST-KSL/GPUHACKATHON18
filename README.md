@@ -86,7 +86,35 @@ Provides the intensity of all the loops, intensity is the (Compute operations/Me
 
 5. Execution
 
-[submission_file](submit.sh)
+Submission script:
+```
+#!/bin/bash 
+#SBATCH --partition=batch 
+#SBATCH --job-name="test" 
+#SBATCH --gres=gpu:p100:1
+#SBATCH --res=HACKATHON_TEAMX
+#SBATCH --nodes=1 
+#SBATCH --ntasks=1
+#SBATCH --time=00:10:00 
+#SBATCH --exclusive 
+#SBATCH --err=JOB.%j.err 
+#SBATCH --output=JOB.%j.out 
+#--------------------------------------------# 
+module load cuda/9.0.176
+module load pgi/17.10
+srun -n 1 --hint=nomultithread ./test
+```
+
+Modify the X according to your team number (1-6)
+In the above exampe we want to use one Nvidia P100 card, if you plan to use 2 cards then declare:
+
+```
+#SBATCH --gres=gpu:p100:2
+```
+
+You can modify the time limit and the number of the tasks, if required.
+
+Source: [submission_file](submit.sh)
 
 6. Profiling
 You compile your code for CPU
