@@ -84,7 +84,9 @@ Loop unrolled 6 times (completely unrolled)
 * Minfo=intensity
 Provides the intensity of all the loops, intensity is the (Compute operations/Memory Operations), if it is more or equal to 1.0 then we should move this loop to GPUs, otherwise not.
 
-4. Execution
+5. Execution
+
+[submission_file](submit.sh)
 
 6. Profiling
 You compile your code for CPU
