@@ -37,7 +37,38 @@ export PATH=$PATH:/opt/allinea/forge/bin/
 Compilation
 
 Example:
-pgf90  -O2 -ta=tesla -acc -Minfo=accel ...
+
+In case that you plan to use PGI compiler:
+```
+pgcc -O2 -ta=tesla:cuda8.0 -acc -Minfo=accel -o test test1.c
+```
+Flags:
+* -acc: activates the OpenACC compilation
+* -Minfo=accel: Informs you about the accelerators messages 
+
+Output:
+```
+main:
+     31, Generating implicit copyout(Temperature[1:1000][1:1000])
+         Generating implicit copyin(Temperature_previous[:][:])
+     32, Loop is parallelizable
+     33, Loop is parallelizable
+         Accelerator kernel generated
+         Generating Tesla code
+         32, #pragma acc loop gang, vector(4) /* blockIdx.y threadIdx.y */
+         33, #pragma acc loop gang, vector(32) /* blockIdx.x threadIdx.x */
+     41, Generating implicit copy(Temperature_previous[1:1000][1:1000])
+         Generating implicit copyin(Temperature[1:1000][1:1000])
+     42, Loop is parallelizable
+     43, Loop is parallelizable
+         Accelerator kernel generated
+         Generating Tesla code
+         42, #pragma acc loop gang, vector(4) /* blockIdx.y threadIdx.y */
+         43, #pragma acc loop gang, vector(32) /* blockIdx.x threadIdx.x */
+         44, Generating implicit reduction(max:worst_dt)
+```
+
+use compiler pgf90 for Fotran and pgc++ for C++
 
 Options: -ta=tesla:lineinfo -Minfo=all,intensity
 
