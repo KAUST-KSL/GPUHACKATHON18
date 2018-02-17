@@ -155,7 +155,7 @@ Loop unrolled 6 times (completely unrolled)
 Provides the intensity of all the loops, intensity is the (Compute operations/Memory Operations), if it is more or equal to 1.0 then we should move this loop to GPUs, otherwise not.
 
 
-5. Execution
+8. Execution
 
 Submission script:
 ```
@@ -192,7 +192,7 @@ In the above exampe we want to use one Nvidia P100 card, if you plan to use 2 ca
 #SBATCH --gres=gpu:p100:2
 ```
 
-6. Profiling
+9. Profiling
 
 Adjust the name of the binary in all job scripts
 
@@ -212,7 +212,7 @@ To use a GUI:
 nvvp results.nvprof
 ```
 
-7. Latest version with OpenAcc pragmas
+10. Latest version with OpenAcc pragmas
 
 Repeat the previous instructions with file [laplace_final_acc.c](laplace_final_acc.c)
 
