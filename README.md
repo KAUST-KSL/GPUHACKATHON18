@@ -109,7 +109,7 @@ To use a GUI:
 nvvp results.nvprof
 ```
 
-7. Laplace version with some OpenACC commands
+7. Laplace version with initial OpenACC pragmas
 
 ```
 pgcc -O2 -ta=tesla:cuda8.0 -acc -Minfo=accel -o laplace_bad_acc laplace_bad_acc.c
@@ -139,23 +139,12 @@ main:
          43, #pragma acc loop gang, vector(32) /* blockIdx.x threadIdx.x */
          44, Generating implicit reduction(max:worst_dt)
 ```
-
-
-Modify the X according to your team number (1-6)
-In the above exampe we want to use one Nvidia P100 card, if you plan to use 2 cards then declare:
-
-```
-#SBATCH --gres=gpu:p100:2
-```
-
 You can modify the time limit and the number of the tasks, if required.
 
 Use compiler pgf90 for Fotran and pgc++ for C++
 
-Options: -ta=tesla:cuda8.0:lineinfo -Minfo=all,intensity
+Options: -ta=tesla:cuda8.0 -Minfo=all,intensity
 
-* lineinfo:
-It will provide the lines in the code that you have memory problems
 
 * Minfo=all
 It will provide all the compiler information (including the acceleration), for example
@@ -166,40 +155,86 @@ Loop unrolled 6 times (completely unrolled)
 Provides the intensity of all the loops, intensity is the (Compute operations/Memory Operations), if it is more or equal to 1.0 then we should move this loop to GPUs, otherwise not.
 
 
+5. Execution
+
+Submission script:
+```
+#!/bin/bash 
+#SBATCH --partition=batch 
+#SBATCH --job-name="test" 
+#SBATCH --gres=gpu:p100:1
+#SBATCH --res=HACKATHON_TEAMX
+#SBATCH --nodes=1 
+#SBATCH --ntasks=1
+#SBATCH --time=00:10:00 
+#SBATCH --exclusive 
+#SBATCH --err=JOB.%j.err 
+#SBATCH --output=JOB.%j.out 
+#--------------------------------------------# 
+module load cuda/9.0.176
+module load pgi/17.10
+srun -n 1 --hint=nomultithread ./laplace_bad_acc
+```
+Adjust the reservatin name accoringly to your team's number and also the time limit.
+
+Submit:
+```
+sbatch submit_laplace_bas_acc.sh
+```
+
+Source: [submission_laplace_bad_acc](submit_laplace_bad_acc.sh)
+
+
+Modify the X according to your team number (1-6)
+In the above exampe we want to use one Nvidia P100 card, if you plan to use 2 cards then declare:
+
+```
+#SBATCH --gres=gpu:p100:2
+```
+
+
 6. Profiling
-You compile your code for CPU
+
+Adjust the name of the binary in all job scripts
 
 Execute:
-nvprof --cpu-profiling on ./executable
-Profiling instructions
-Use the tool nvvp for GUI
-Profiling with Allinea
-Allinea profiling tool: /opt/allinea/forge/
+```
+sbatch submit_profiling_terminal.sh
+```
+Source: [submission_profile_terminal](submit_profile_terminal.sh)
 
-Execution
-export CUDA_VISIBLE_DEVICES=X
-check which GPUS are used:
-nvidia-smi
-Material
-OpenACC	OpenACC web page
-OpenACC reference guide
-OpenACC programming guide
-OpenACC getting started guide
+Open the output file and see the profiling information.
 
-PGI	Compiler guide
+To use a GUI:
+* Use the submission file [submission_profile_file](submit_profile_file.sh)
 
-CUDA	Cuda with C/C++
-Cuda with Fortran
-
-GPU Libraries	GPUs libraries
-
-Other	Matlab and GPU
+* Execute:
+```
+nvvp results.nvprof
+```
 
 
-AMGX and MiniFE
-AMGX and MiniFE installation instructions (if needed only): http://hpc.kaust.edu.sa/AMGX_MINIFE_GPU
+# Material
+[OpenACC web page](https://www.openacc.org)
+[OpenACC reference guide](https://www.openacc.org/sites/default/files/inline-files/OpenACC%20API%202.6%20Reference%20Guide.pdf)
+[OpenACC programming guide](https://www.openacc.org/sites/default/files/inline-files/OpenACC_Programming_Guide_0.pdf)
+[OpenACC getting started guide](http://www.pgroup.com/doc/openacc17_gs.pdf)
+
+[PGI	Compiler guide](http://www.pgroup.com/resources/docs/18.1/pdf/pgi18ug-x86.pdf)
+
+[CUDA	Cuda with C/C++](https://developer.nvidia.com/how-to-cuda-c-cpp)
+[Cuda with Fortran](https://developer.nvidia.com/cuda-fortran)
+
+[GPU Libraries	GPUs libraries](https://developer.nvidia.com/how-to-cuda-libraries)
+
+[Matlab and GPU](https://developer.nvidia.com/matlab-cuda)
+
+
 Deep Neural Networks - Cudnn
-Available here: module load cudnn
+Load:
+```
+module load cudnn
+```
 
 
 
