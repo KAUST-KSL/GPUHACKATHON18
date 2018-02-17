@@ -179,7 +179,7 @@ Adjust the reservatin name accoringly to your team's number and also the time li
 
 Submit:
 ```
-sbatch submit_laplace_bas_acc.sh
+sbatch submit_laplace_bad_acc.sh
 ```
 
 Source: [submission_laplace_bad_acc](submit_laplace_bad_acc.sh)
@@ -191,7 +191,6 @@ In the above exampe we want to use one Nvidia P100 card, if you plan to use 2 ca
 ```
 #SBATCH --gres=gpu:p100:2
 ```
-
 
 6. Profiling
 
@@ -213,6 +212,9 @@ To use a GUI:
 nvvp results.nvprof
 ```
 
+7. Latest version with OpenAcc pragmas
+
+Repeat the previous instructions with file [laplace_final_acc.c](laplace_final_acc.c)
 
 # Material
 [OpenACC web page](https://www.openacc.org)
