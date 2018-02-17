@@ -27,14 +27,6 @@ module load cuda/9.0.176
 module load pgi/17.10 
 ```
 
-or by hand execute the following
-export PATH=$PATH:/usr/local/cuda/bin/
-export PATH=/sw/cs/pgi/linux86-64/16.1/mpi/openmpi-1.10.1/bin/:$PATH
-export PATH=$PATH:/sw/cs/pgi/linux86-64/16.1/bin/
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/sw/cs/pgi/linux86-64/16.1/lib/
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/sw/cs/pgi/linux86-64/16.1/mpi/openmpi-1.10.1/lib/
-export PATH=$PATH:/opt/allinea/forge/bin/
-
 4. Compilation
 
 Example:
@@ -88,29 +80,39 @@ module load cuda/9.0.176
 module load pgi/17.10
 srun -n 1 --hint=nomultithread ./laplace_serial
 ```
+Adjust the reservatin name accoringly to your team's number and also the time limit.
 
-Modify the X according to your team number (1-6)
-In the above exampe we want to use one Nvidia P100 card, if you plan to use 2 cards then declare:
-
+Submit:
 ```
-#SBATCH --gres=gpu:p100:2
+sbatch submit_laplace_serial.sh
 ```
-
-You can modify the time limit and the number of the tasks, if required.
 
 Source: [submission_laplace_serial](submit_laplace_serial.sh)
 
 6. Profiling
 
-Compile your code for CPU (remove -acc and -ta)
+Compile your code for CPU (remove -acc and -ta from the PGI compilation if they were included)
 
 Execute:
-nvprof --cpu-profiling on ./executable
-
-
-In case that you plan to use PGI compiler:
 ```
-pgcc -O2 -ta=tesla:cuda8.0 -acc -Minfo=accel -o test test1.c
+sbatch submit_profiling_terminal.sh
+```
+Source: [submission_profile_terminal](submit_profile_terminal.sh)
+
+Open the output file and see the profiling information.
+
+To use a GUI:
+* Use the submission file [submission_profile_file](submit_profile_file.sh)
+
+* Execute:
+```
+nvvp results.nvprof
+```
+
+7. Laplace version with some OpenACC commands
+
+```
+pgcc -O2 -ta=tesla:cuda8.0 -acc -Minfo=accel -o laplace_bad_acc laplace_bad_acc.c
 ```
 Flags:
 * -acc: activates the OpenACC compilation
@@ -137,6 +139,16 @@ main:
          43, #pragma acc loop gang, vector(32) /* blockIdx.x threadIdx.x */
          44, Generating implicit reduction(max:worst_dt)
 ```
+
+
+Modify the X according to your team number (1-6)
+In the above exampe we want to use one Nvidia P100 card, if you plan to use 2 cards then declare:
+
+```
+#SBATCH --gres=gpu:p100:2
+```
+
+You can modify the time limit and the number of the tasks, if required.
 
 Use compiler pgf90 for Fotran and pgc++ for C++
 
