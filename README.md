@@ -1,4 +1,4 @@
-# GPUHACKATHON18
+# KAUST GPU HACKATHON 2018
 
 Programming GPU with OpenACC
 The introduction talk from Dr Saber Feki can be downloaded 
