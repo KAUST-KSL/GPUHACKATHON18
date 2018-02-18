@@ -2,7 +2,7 @@
 
 Programming GPU with OpenACC
 
-The introduction talk from Dr Saber Feki can be downloaded here
+The introduction talk from Dr Saber Feki can be downloaded [here](material/Hackathon2018_OpenACC.pdf)
 
 1. Connection to IBEX:
 
