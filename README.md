@@ -35,7 +35,7 @@ Serial Laplace:
 
 In case that you plan to use PGI compiler:
 ```
-pgcc -O2 -Minfo=all -o laplace_serial laplace_serial.c
+pgcc -O2 -Minfo=all -o laplace_serial src/laplace_serial.c
 ```
 * -Minfo=all: Informs you about all the messages 
 
@@ -112,7 +112,7 @@ nvvp results.nvprof
 7. Laplace version with initial OpenACC pragmas
 
 ```
-pgcc -O2 -ta=tesla:cuda8.0 -acc -Minfo=accel -o laplace_bad_acc laplace_bad_acc.c
+pgcc -O2 -ta=tesla:cuda8.0 -acc -Minfo=accel -o laplace_bad_acc src/laplace_bad_acc.c
 ```
 Flags:
 * -acc: activates the OpenACC compilation
@@ -214,7 +214,7 @@ nvvp results.nvprof
 
 10. Latest version with OpenAcc pragmas
 
-Repeat the previous instructions with file [laplace_final_acc.c](laplace_final_acc.c)
+Repeat the previous instructions with file [laplace_final_acc.c](src/laplace_final_acc.c)
 
 # Material
 [OpenACC web page](https://www.openacc.org)
