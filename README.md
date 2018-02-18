@@ -218,8 +218,11 @@ Repeat the previous instructions with file [laplace_final_acc.c](laplace_final_a
 
 # Material
 [OpenACC web page](https://www.openacc.org)
+
 [OpenACC reference guide](https://www.openacc.org/sites/default/files/inline-files/OpenACC%20API%202.6%20Reference%20Guide.pdf)
+
 [OpenACC programming guide](https://www.openacc.org/sites/default/files/inline-files/OpenACC_Programming_Guide_0.pdf)
+
 [OpenACC getting started guide](http://www.pgroup.com/doc/openacc17_gs.pdf)
 
 [PGI	Compiler guide](http://www.pgroup.com/resources/docs/18.1/pdf/pgi18ug-x86.pdf)
