@@ -212,11 +212,13 @@ To use a GUI:
 nvvp results.nvprof
 ```
 
-10. Latest version with OpenAcc pragmas
+10. Latest version with optimized OpenACC pragmas
 
 Repeat the previous instructions with file [laplace_final_acc.c](src/laplace_final_acc.c)
 
 # Material
+
+[Ibex cheat sheet](material/ibex_flyer.pdf)
 [OpenACC web page](https://www.openacc.org)
 
 [OpenACC reference guide](https://www.openacc.org/sites/default/files/inline-files/OpenACC%20API%202.6%20Reference%20Guide.pdf)
