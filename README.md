@@ -7,7 +7,7 @@ The introduction talk from Dr Saber Feki can be downloaded [here](material/Hacka
 1. Connection to IBEX:
 
 ```
-ssh username@glogin.ibex.kaust.edu.sa
+ssh -X username@glogin.ibex.kaust.edu.sa
 ```
 
 2. Go to the following location:
