@@ -2,7 +2,7 @@
 #SBATCH --partition=batch 
 #SBATCH --job-name="test" 
 #SBATCH --gres=gpu:p100:1
-#SBATCH --res=HACKATHON_TEAMX
+#SBATCH --res=HACKATHON_TEAMS
 #SBATCH --nodes=1 
 #SBATCH --ntasks=1
 #SBATCH --time=00:10:00 
@@ -12,4 +12,4 @@
 #--------------------------------------------# 
 module load cuda/9.0.176
 module load pgi/17.10
-srun -n 1 --hint=nomultithread ./test
+srun -n 1 --hint=nomultithread ./laplace_serial

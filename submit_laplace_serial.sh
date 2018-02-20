@@ -2,7 +2,7 @@
 #SBATCH --partition=batch 
 #SBATCH --job-name="test" 
 #SBATCH --gres=gpu:p100:1
-#SBATCH --res=HACKATHON_TEAMX
+#SBATCH --res=HACKATHON_TEAMS
 #SBATCH --nodes=1 
 #SBATCH --ntasks=1
 #SBATCH --time=00:10:00 
