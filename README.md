@@ -214,6 +214,15 @@ nvvp results.nvprof
 
 Repeat the previous instructions with file [laplace_final_acc.c](src/laplace_final_acc.c)
 
+# Tips
+
+Use PGI with MPI
+
+```
+module load pgi/17.10
+module load pgi/17.10_openmpi
+```
+
 # Material
 
 [Ibex cheat sheet](material/ibex_flyer.pdf)
