@@ -35,7 +35,7 @@ Serial Laplace:
 
 In case that you plan to use PGI compiler:
 ```
-pgcc -O2 -Minfo=all -o laplace_serial src/laplace_serial.c
+pgcc -ta=tesla:cc60 -O2 -Minfo=all -o laplace_serial src/laplace_serial.c
 ```
 * -Minfo=all: Informs you about all the messages 
 
@@ -68,7 +68,7 @@ Submission script:
 #SBATCH --partition=batch 
 #SBATCH --job-name="test" 
 #SBATCH --gres=gpu:p100:1
-#SBATCH --res=HACKATHON_TEAMX
+#SBATCH --res=HACKATHON_TEAMS
 #SBATCH --nodes=1 
 #SBATCH --ntasks=1
 #SBATCH --time=00:10:00 
@@ -80,7 +80,6 @@ module load cuda/9.0.176
 module load pgi/17.10
 srun -n 1 --hint=nomultithread ./laplace_serial
 ```
-Adjust the reservatin name accoringly to your team's number and also the time limit.
 
 Submit:
 ```
@@ -112,7 +111,7 @@ nvvp results.nvprof
 7. Laplace version with initial OpenACC pragmas
 
 ```
-pgcc -O2 -ta=tesla:cuda8.0 -acc -Minfo=accel -o laplace_bad_acc src/laplace_bad_acc.c
+pgcc -O2 -ta=tesla:cc60 -acc -Minfo=accel -o laplace_bad_acc src/laplace_bad_acc.c
 ```
 Flags:
 * -acc: activates the OpenACC compilation
@@ -143,7 +142,7 @@ You can modify the time limit and the number of the tasks, if required.
 
 Use compiler pgf90 for Fotran and pgc++ for C++
 
-Options: -ta=tesla:cuda8.0 -Minfo=all,intensity
+Options: -ta=tesla:cc60 -Minfo=all,intensity
 
 
 * Minfo=all
@@ -175,7 +174,6 @@ module load cuda/9.0.176
 module load pgi/17.10
 srun -n 1 --hint=nomultithread ./laplace_bad_acc
 ```
-Adjust the reservatin name accoringly to your team's number and also the time limit.
 
 Submit:
 ```
